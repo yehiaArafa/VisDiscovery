@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>visDiscovery - Front</title>
+
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+	<!-- Font style included -->
+	<link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+
+</head>
+<body>
+<div class="header">
+	<h1 class="text-center">visDiscovery<small>Beta</small></h1>
+</div>
+
+<div class="container">
+	<div id="vis">
+			<form action="api/choices/postTableName" method="post">
+			<h3>Tablename:</h3>
+			<small>Please enter your desired table name</small>
+			  <select style=" overflow-x: hidden;overflow-y: scroll;" class="form-control"id="d1"name="tableName">
+                  <option disabled selected value> -- select an option -- </option>
+                  <option v-for="dropd in response_data" :value="dropd" >{{dropd}}</option>
+              </select>
+			  <button class="btn btn-success col-xs-12" type="submit">Submit</button>
+			</form> 
+	</div>
+</div>
+
+<!--  VUEJS LIBRARIES IMPORT -->
+<script src="https://unpkg.com/vue"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.16.1/axios.min.js"></script>
+<!-- END OF VUEJS LIBRARIES IMPORT -->
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"/>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+
+<script type="text/javascript">
+    var drop=new Vue({
+        el : '#d1',
+        data : {
+            response_data:null
+        },
+        mounted:function()
+        {
+            axios.get('http://localhost:8080/VisDiscovery/api/choices/getTableNamesPool')
+            .then(response => {
+                this.response_data=response.data.tableNamePool;
+            
+            })
+            .catch(e => {
+                console.log(e);
+            });
+            
+        }
+        
+    });
+        
+</script>
+
+
+</body>
+</html>
